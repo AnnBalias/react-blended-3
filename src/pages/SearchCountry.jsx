@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Container from '../components/Container/Container';
 import SearchForm from '../components/SearchForm/SearchForm';
 import Section from '../components/Section/Section';
@@ -6,30 +6,42 @@ import { fetchByRegion } from '../service/countryApi';
 import Loader from '../components/Loader/Loader';
 import CountryList from '../components/CountryList/CountryList';
 import Heading from '../components/Heading/Heading';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 const SearchCountry = () => {
-
+  
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchRegion = searchParams.get("region") ?? "";
+    
   const [ countriesList, setCountriesList ] = useState([]);
-  const [ region, setRegion ] = useState('');
   const [ load, setLoad ] = useState(false);
   const [ error, setError ] = useState(false);
 
-  const onSubmit = async (region) => {
-    try {
-      setLoad(true)
-      setError(false)
-      setRegion(region);
-      const countries = await fetchByRegion(region);
-      if (countries.length === 0) {
+  useEffect(() => {
+    if (!searchRegion) return;
+
+    const fetchCountries = async () => {
+      try {
+        setLoad(true)
+        setError(false)
+        const countries = await fetchByRegion(searchRegion);
+        if (countries.length === 0) {
+          setError(true);
+          setCountriesList([]);
+          return
+        }
+        setCountriesList(countries);      
+      } catch (error) {
         setError(true);
-        return
+      } finally {
+        setLoad(false)
       }
-      setCountriesList(countries);
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoad(false)
-    }
+    };
+    fetchCountries();
+  }, [searchRegion])
+
+  const onSubmit = (region) => {
+    setSearchParams({ region });
   };
 
   return (

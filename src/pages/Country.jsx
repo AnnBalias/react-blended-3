@@ -3,16 +3,15 @@ import Container from '../components/Container/Container';
 import CountryInfo from '../components/CountryInfo/CountryInfo';
 import GoBackBtn from '../components/GoBackBtn/GoBackBtn';
 import Section from '../components/Section/Section';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { fetchCountry } from '../service/countryApi';
 import Loader from '../components/Loader/Loader';
 
 
 const Country = () => {
 
-  const navigate = useNavigate();
   const location = useLocation();
-  const goBackUrl = useMemo(() => location.state?.from || '/', [location.state]);
+  const goBackUrl = useRef(location.state ?? '/');
 
   const {countryId} = useParams();
   const [countryData, setCountryData] = useState(null)

@@ -9,7 +9,7 @@ const regions = [
   { id: 'oceania', value: 'oceania', name: 'Oceania' },
 ];
 
-const SearchForm = ({ onSubmit }) => {
+const SearchForm = ({ onSubmit}) => {
 
   const sub = (event) => {
     event.preventDefault(); 
