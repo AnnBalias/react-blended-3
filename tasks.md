@@ -21,8 +21,9 @@
 Для бекенду використовується [[REST COUNTRIES]](https://restcountries.com/). У
 цій роботі будуть використовуватися наступні ендпоінти.
 
-- [/v3.1/region/europe](https://restcountries.com/v3.1/subregion/europe) перелік
-  країн Європи для створення колекції на головній сторінці.
+<!-- - [/v3.1/region/europe](https://restcountries.com/v3.1/subregion/europe) перелік
+  країн Європи для створення колекції на головній сторінці. -->
+
 - [/v3.1/region/{region}](https://restcountries.com/#api-endpoints-v3-region)
   пошук країни по регіону на сторінці пошуку країн.
 - [/v3.1/name/{name}](https://restcountries.com/#api-endpoints-v3-name) запит на
